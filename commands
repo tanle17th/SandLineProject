@@ -1,0 +1,44 @@
+Laravel YouTube Tutorial series: https://www.youtube.com/playlist?list=PL4cUxeGkcC9hL6aCFKyagrT1RCfVN4w2Q
+
+-- First install composer from its website | Add it to environments variable
+composer global require laravel/installer
+
+-- Create new laravel project
+laravel new PizzaHouse
+
+php artisan serve
+
+mysql -u root
+CREATE DATABASE pizzahouse
+
+-- ARTISAN ALL COMMANDS | HELP
+php artisan
+
+
+-- Create tables
+php artisan make:migration create_pizzas_table
+php artisan migrate
+
+-- Drop tables and will create again
+php artisan migrate:fresh
+
+-- adding a column in existing table
+php artisan make:migration add_price_to_pizzas_table
+
+
+-- Create Model
+php artisan make:model Pizza
+php artisan make:controller PizzaController
+
+-- Boilerplate UI | will also install Bootstrap CSS
+composer require laravel/ui
+php artisan ui vue --auth
+
+-- Create Migration and Controller From Model
+php artisan make:model Kebab -mc
+
+-- Migrate only one file/table
+php artisan migrate:refresh --path=/database/migrations/xxxx_xx_xx_xxxxxx_create_service_worklog_table.php
+
+-- Hard database reset and seed some data for testing
+php artisan migrate:refresh --seed
