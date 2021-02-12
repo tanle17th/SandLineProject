@@ -5,36 +5,50 @@
 <div class="container-fluid mt-4">
 
     @php
-        $cards = [
-            array(
-                'header' => 'Work logs',
-                'headerImageURL' => 'https://images.unsplash.com/photo-1453928582365-b6ad33cbcf64?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1052&q=80',
-                'message' => 'Retrieve the daily work log forms.',
-                'buttonText' => 'Open Work logs',
-                'buttonLink' => route('worklogs.list'),
-            ),
-            array(
-                'header' => 'Services',
-                'headerImageURL' => 'https://images.unsplash.com/photo-1529220502050-f15e570c634e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=801&q=80',
-                'message' => 'Add/modify services.',
-                'buttonText' => 'Open Services',
-                'buttonLink' => route('services.list'),
-            ),
-            array(
-                'header' => 'Site locations',
-                'headerImageURL' => 'https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1033&q=80',
-                'message' => 'Add/modify site locations.',
-                'buttonText' => 'Open Site locations',
-                'buttonLink' => route('locations.list'),
-            ),
-            array(
-                'header' => 'Workers',
-                'headerImageURL' => 'https://images.unsplash.com/photo-1563823251941-b9989d1e8d97?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80',
-                'message' => 'Add/modify workers.',
-                'buttonText' => 'Manage Workers',
-                'buttonLink' => route('workers.list'),
-            )
-        ];
+    $cards = [
+    array(
+    'header' => 'Work logs',
+    'headerImageURL' => 'https://images.unsplash.com/photo-1453928582365-b6ad33cbcf64?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1052&q=80',
+    'message' => 'Retrieve the daily work log forms.',
+    'buttonText' => 'Open Work logs',
+    'buttonLink' => route('worklogs.list'),
+    ),
+    array(
+    'header' => 'Services',
+    'headerImageURL' => 'https://images.unsplash.com/photo-1529220502050-f15e570c634e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=801&q=80',
+    'message' => 'Add/modify services.',
+    'buttonText' => 'Open Services',
+    'buttonLink' => route('services.list'),
+    ),
+    array(
+    'header' => 'Site locations',
+    'headerImageURL' => 'https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1033&q=80',
+    'message' => 'Add/modify site locations.',
+    'buttonText' => 'Open Site locations',
+    'buttonLink' => route('locations.list'),
+    ),
+    array(
+    'header' => 'Workers',
+    'headerImageURL' => 'https://images.unsplash.com/photo-1563823251941-b9989d1e8d97?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80',
+    'message' => 'Add/modify workers.',
+    'buttonText' => 'Manage Workers',
+    'buttonLink' => route('workers.list'),
+    ),
+    array(
+    'header' => 'Time Card Management',
+    'headerImageURL' => 'https://media.istockphoto.com/photos/date-and-time-reminder-or-deadline-concept-small-red-alarm-clock-on-picture-id1151795710?k=6&m=1151795710&s=612x612&w=0&h=Z8N5xZJmgyD0m5Ei3ONBfMXRDTI2FT8XQWSFPFmpwSo=',
+    'message' => 'Track/Modify time cards.',
+    'buttonText' => 'Manage Time Card',
+    'buttonLink' => route('workers.list'),
+    ),
+    array(
+    'header' => 'Incident Management',
+    'headerImageURL' => 'https://cdn.wpforms.com/wp-content/uploads/2020/05/Incident-Management.png',
+    'message' => 'Modify/Deactivate incident reports.',
+    'buttonText' => 'Manage Incident Report',
+    'buttonLink' => route('workers.list'),
+    )
+    ];
     @endphp
 
     <div class="row justify-content-center">
@@ -47,9 +61,7 @@
 
                 <!--Card image-->
                 <div class="view overlay">
-                    <img class="card-img-top"
-                        src="{{ $card['headerImageURL'] }}"
-                        alt="Card image cap" height="200px">
+                    <img class="card-img-top" src="{{ $card['headerImageURL'] }}" alt="Card image cap" height="200px">
                     <!-- <a href="#!">
 					<div class="mask rgba-white-slight"></div>
 				</a> -->

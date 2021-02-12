@@ -5,22 +5,37 @@
 <div class="container-fluid mt-4">
 
     @php
-        $cards = [
-            array(
-                'header' => 'Add Work log',
-                'headerImageURL' => 'https://images.unsplash.com/photo-1477577314779-8dd53d8e615f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1055&q=80',
-                'message' => 'Add a new work log.',
-                'buttonText' => 'Add Work log',
-                'buttonLink' => route('worklogs.create'),
-            ),
-            array(
-                'header' => 'My Work logs',
-                'headerImageURL' => 'https://images.unsplash.com/photo-1583521214690-73421a1829a9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80',
-                'message' => 'Retrieve the daily work log forms.',
-                'buttonText' => 'Open Work logs',
-                'buttonLink' => route('worklogs.list'),
-            ),
-        ];
+    $cards = [
+    array(
+    'header' => 'Add Work log',
+    'headerImageURL' => 'https://images.unsplash.com/photo-1477577314779-8dd53d8e615f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1055&q=80',
+    'message' => 'Add a new work log.',
+    'buttonText' => 'Add Work log',
+    'buttonLink' => route('worklogs.create'),
+    ),
+    array(
+    'header' => 'My Work logs',
+    'headerImageURL' => 'https://images.unsplash.com/photo-1583521214690-73421a1829a9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80',
+    'message' => 'Retrieve the daily work log forms.',
+    'buttonText' => 'Open Work logs',
+    'buttonLink' => route('worklogs.list'),
+    ),
+    array(
+    'header' => 'Time Card',
+    'headerImageURL' => 'https://media.istockphoto.com/photos/records-work-hours-in-a-time-sheet-picture-id804619472?k=6&m=804619472&s=612x612&w=0&h=OaPvcO423phurj69OEWVzitPG_vqVJtfCkVasGFSf4w=',
+    'message' => 'Start/End your work shift.
+    ',
+    'buttonText' => 'Manage work shift',
+    'buttonLink' => route('worklogs.list'),
+    ),
+    array(
+    'header' => 'Incident Report',
+    'headerImageURL' => 'https://images.template.net/wp-content/uploads/2017/05/Incident-Report-Template.jpg',
+    'message' => 'Report any incident that happens.',
+    'buttonText' => 'Make new incident',
+    'buttonLink' => route('worklogs.list'),
+    ),
+    ];
     @endphp
 
     <div class="row justify-content-center">
@@ -33,9 +48,7 @@
 
                 <!--Card image-->
                 <div class="view overlay">
-                    <img class="card-img-top"
-                        src="{{ $card['headerImageURL'] }}"
-                        alt="Card image cap" height="200px">
+                    <img class="card-img-top" src="{{ $card['headerImageURL'] }}" alt="Card image cap" height="200px">
                     <!-- <a href="#!">
 					<div class="mask rgba-white-slight"></div>
 				</a> -->
