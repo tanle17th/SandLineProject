@@ -22,7 +22,7 @@ use Facade\FlareClient\View;
 */
 
 Route::get('/', function () {
-    // return view('welcome');
+   //  return view('welcome');
     return redirect(route('dashboard'));
 });
 
