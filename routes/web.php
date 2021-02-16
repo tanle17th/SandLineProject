@@ -69,9 +69,9 @@ Route::get('/worklogs/{id}', [WorklogController::class, 'edit'])->name('worklogs
 Route::post('/worklogs/{id}', [WorklogController::class, 'update'])->name('worklogs.edit')->middleware('auth.admin');
 Route::delete('/worklogs/{id}', [WorklogController::class, 'delete'])->name('worklogs.delete')->middleware('auth.admin');
 
-Route::get('/incidents', [IncidentController::class, 'index'])->name('incidents.list');
+//Route::get('/incidents', [IncidentController::class, 'index'])->name('incidents.list');
 //Route::get('/incidents', [IncidentController::class, 'show'])->name('incidents.show');
-Route::get('/worklogs/create', [IncidentController::class, 'create'])->name('incidents.create');
+//Route::get('/worklogs/create', [IncidentController::class, 'create'])->name('incidents.create');
 // Route::get('/worklogs/filtered/{worker_id}', [WorklogController::class, 'worklogsOfWorker'])->name('worklogs.list.filtered.by.worker')->middleware('auth.admin');
 // Route::get('/worklogs/filtered', [WorklogController::class, 'worklogsFilteredByDate'])->name('worklogs.list.filtered.by.date')->middleware('auth.admin');
 // Route::get('/worklogs/export', [WorklogController::class, 'export'])->name('worklogs.list.export')->middleware('auth.admin');
