@@ -6,9 +6,11 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\WorkerController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\LocationController;
+use App\Http\Controllers\TimecardController;
 use App\Http\Controllers\WorklogController;
 use App\Http\Controllers\WorklogsExportController;
 use Facade\FlareClient\View;
+use GuzzleHttp\Promise\Create;
 
 /*
 |--------------------------------------------------------------------------
@@ -69,7 +71,12 @@ Route::get('/worklogs/{id}', [WorklogController::class, 'edit'])->name('worklogs
 Route::post('/worklogs/{id}', [WorklogController::class, 'update'])->name('worklogs.edit')->middleware('auth.admin');
 Route::delete('/worklogs/{id}', [WorklogController::class, 'delete'])->name('worklogs.delete')->middleware('auth.admin');
 
-
+// Web route for creating new Timecard
+// ---> Allow users to Start the Workday
+// ---> Allow users to End the Workday
+Route::get('/timecards/create', [TimecardController::class, 'create'])->name('timecards.create');
+Route::post('/timecards', [TimecardController::class, 'store'])->name('timecards.store');
+// ----------------------------------------------------------------------------------------------
 
 Route::get('/test', function () {
 

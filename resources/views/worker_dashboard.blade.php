@@ -25,8 +25,8 @@
     'headerImageURL' => 'https://media.istockphoto.com/photos/records-work-hours-in-a-time-sheet-picture-id804619472?k=6&m=804619472&s=612x612&w=0&h=OaPvcO423phurj69OEWVzitPG_vqVJtfCkVasGFSf4w=',
     'message' => 'Start/End your work shift.
     ',
-    'buttonText' => 'Manage work shift',
-    'buttonLink' => route('worklogs.list'),
+    'buttonText' => 'Add work shift',
+    'buttonLink' => route('timecards.create'),
     ),
     array(
     'header' => 'Incident Report',
