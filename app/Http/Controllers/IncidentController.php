@@ -3,24 +3,33 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Incident;
 use App\Models\User;
+use App\Models\Location;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 class IncidentController extends Controller
 {
-   public function index()
-    {
-        // Get data from databases
-        // $workers = User::all();
-        // $workers = User::orderBy('name', 'desc')->get();
-        // $workers = User::where('type', 'hawaiian')->get();
-        $workers = Incident::latest()->get();
-       // $inidents = Incident::where('role', 'worker')->orderBy('name')->paginate(15);
 
-        return view('workers.index', [
-            'workers' => $workers
-        ]);
+    // public function __construct()
+    // {
+    //     $this->middleware('auth');
+    // }
+
+
+    public function index()
+    {
+        // $incidents = Incident::all();
+      //  $incidents = Incident::orderBy('time')->get();
+     //   $incidents = Incident::orderBy('time', 'desc')->get();
+     //   $incidents = Incident::where('detail', 'testing2 detail')->get();
+        $incidents = Incident::latest()->get();
+
+
+      //  return view('incidents.index');
+        return view('incidents.index', ['incidents' => $incidents,]);
+     
     }
 
     public function edit($id)
@@ -28,9 +37,8 @@ class IncidentController extends Controller
         // use $id to query the db
         $incident = Incident::findOrFail($id);
 
-        return view('incidents.edit', [
-            'incident' => $incident
-        ]);
+        return view('incidents.edit', [ 'incident' => $incident ]);
+    
     }
 
     public function create()
@@ -38,57 +46,65 @@ class IncidentController extends Controller
         return view('incidents.create');
     }
 
-    // public function store()
-    // {
+    public function store()
+    {
+        // error_log(request('date'));
+        // error_log(request('time'));
+        // error_log(request('location'));
+        // error_log(request('date'));
+        // error_log(request('date'));
+        // error_log(request('date'));
 
-    //     request()->validate([
-    //         'name' => 'required',
-    //         'email' => 'required',
-    //         'password' => 'required'
-    //     ]);
+         $incident = new Incident();
+      
+        $incident->date = request('date');
+        $incident->time = request('time');
+       // $incident->location = request('location');
+        $incident->detail = request('detail');
+        $incident->image = request('image');
+        $incident->comment = request('comment');
+        
+        // error_log($incident);
+         error_log($incident->save());
 
-    //     $user = new User();
+     //   return redirect('/index')->with('mssg', 'Incident added successfully');
+        return redirect(route('dashboard'))->with('mssg', 'Incident added successfully');
+    }
 
-    //     $user->name = request('name');
-    //     $user->email = request('email');
-    //     $user->password = Hash::make(request('password'));
-    //     $user->role = 'worker';
-    //     $user->is_active = request('is_active');
+    public function update($id)
+    {
 
-    //     $user->save();
+        request()->validate([
+            'date' => 'required',
+            'time' => 'required',
+            //'location' => 'required',
+            'detail' => 'required',
+            'image' => 'required',
+            'comment' => 'required'
+        ]);
 
-    //     return redirect(route('workers.list'))->with('msg', 'New worker account added');
-    // }
+        $incident = Incident::findOrFail(request('id'));
 
-    // public function update($id)
-    // {
+        $incident->date = request('date');
+        $incident->time = request('time');
+       // $incident->location = request('location');
+        $incident->detail = request('detail');
+        $incident->image = request('image');
+        $incident->comment = request('comment');
 
-    //     request()->validate([
-    //         'name' => 'required',
-    //         'email' => 'required'
-    //     ]);
 
-    //     $user = User::findOrFail(request('id'));
+        $incident->save();
 
-    //     $user->name = request('name');
-    //     $user->email = request('email');
-    //     if (request('password') != null) {
-    //         $user->password = Hash::make(request('password'));
-    //     }
-    //     $user->role = 'worker';
-    //     $user->is_active = request('is_active');
+        return redirect(route('incidents.list'))->with('mssg', 'Incident updated');
+    }
 
-    //     $user->save();
+    public function delete($id)
+    {
 
-    //     return redirect(route('workers.list'))->with('msg', 'Worker account updated');
-    // }
+        $incident = Incident::findOrFail($id);
+        $incident->delete();
 
-    // public function delete($id)
-    // {
-
-    //     $user = User::findOrFail($id);
-    //     $user->delete();
-
-    //     return redirect(route('workers.list'))->with('msg', 'Worker account deleted');
-    // }
+       return redirect(route('incidents.list'))->with('mssg', 'Incident deleted');
+      // return redirect('/index')->with('mssg', 'Incident Deleted');
+    }
 }

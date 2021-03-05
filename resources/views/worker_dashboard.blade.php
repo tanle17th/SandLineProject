@@ -3,6 +3,14 @@
 @section('content')
 
 <div class="container-fluid mt-4">
+<div class="container">
+  <div class="alert alert-success alert-dismissible">
+    <button type="button" class="close" data-dismiss="alert">×</button>
+    <p> {{session('mssg')}}</p>
+  </div>
+</div>
+
+<div class="container-fluid mt-4">
 
     @php
     $cards = [
@@ -33,7 +41,7 @@
     'headerImageURL' => 'https://images.template.net/wp-content/uploads/2017/05/Incident-Report-Template.jpg',
     'message' => 'Report any incident that happens.',
     'buttonText' => 'Make new incident',
-    'buttonLink' => route('worklogs.list'),
+    'buttonLink' => route('incidents.create'),
     ),
     ];
     @endphp

@@ -46,7 +46,7 @@
     'headerImageURL' => 'https://cdn.wpforms.com/wp-content/uploads/2020/05/Incident-Management.png',
     'message' => 'Modify/Deactivate incident reports.',
     'buttonText' => 'Manage Incident Report',
-    'buttonLink' => route('incident.list'),
+    'buttonLink' => route('incidents.list'),
     )
     ];
     @endphp
