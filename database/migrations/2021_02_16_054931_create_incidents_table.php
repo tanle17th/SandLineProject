@@ -20,9 +20,9 @@ class CreateIncidentsTable extends Migration
             $table->foreignId('location_id')->constrained()->onDelete('cascade');
             $table->date('date');
             $table->dateTime('time');
-            $table->string('detail')->nullable();
-            $table->string('comment');
-            $table->string('image');
+            $table->string('detail');
+            $table->string('comment')->nullable();
+            $table->string('image')->nullable();
             $table->boolean('is_active')->default(true);
         });
     }
