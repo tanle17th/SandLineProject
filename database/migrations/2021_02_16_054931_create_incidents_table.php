@@ -16,13 +16,14 @@ class CreateIncidentsTable extends Migration
         Schema::create('incidents', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-          //  $table->foreignId('user_id')->constrained()->onDelete('cascade');
-         //   $table->foreignId('location_id')->constrained()->onDelete('cascade');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('location_id')->constrained()->onDelete('cascade');
             $table->date('date');
             $table->dateTime('time');
             $table->string('detail')->nullable();
             $table->string('comment');
             $table->string('image');
+            $table->boolean('is_active')->default(true);
         });
     }
 

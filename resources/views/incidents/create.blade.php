@@ -15,9 +15,9 @@
       <form class="col-sm-6" action="/incidents/store" method="POST" autocomplete="off">
         @csrf
         <div class="form-group mt-4">
-          <label>Date</label>
-          <input type="date" name="date" class="form-control" placeholder="Date" autocomplete="false" autocomplete='off'
-            required>
+          <label>Date:</label>
+          <input type="date" id="date" name="date" class="form-control" value="{{ date('Y-m-d') }}"
+            required readonly>
           @error('date')
             <span class="text-danger">
               <strong>{{ $message }}</strong>
@@ -25,15 +25,31 @@
           @enderror
         </div>
         <div class="form-group">
-          <label>Time</label>
-          <input type="time" name="time" class="form-control" placeholder="Time" required autocomplete="false"
-            autocomplete='off' required>
+          <label>Time:</label>
+         <input type="time" id="time" name="time" placeholder="Select time" class="form-control"
+          value="{{ date('H:i') }}" required readonly>
           @error('time')
             <span class="text-danger">
               <strong>{{ $message }}</strong>
             </span>
           @enderror
         </div>
+
+        <div class="form-group mt-4">
+            <label for="location">Location:</label>
+            <select name="location" id="location" class="browser-default custom-select" required>
+              <option disabled selected value="">Select a location</option>
+              @foreach ($locations as $location)
+                <option value="{{ $location->id }}">{{ $location->fullLocation() }}</option>
+              @endforeach
+            </select>
+            @error('location')
+              <span class="text-danger">
+                <strong>{{ $message }}</strong>
+              </span>
+            @enderror
+          </div>
+
         <!-- <div class="form-group">
           <label>Detail</label>
           <input type="text" name="detail" class="form-control" placeholder="Detail" required autocomplete="false"
@@ -46,7 +62,7 @@
         </div> -->
 
         <div class="form-group mt-4">
-            <label for="detail">Detail:</label>
+            <label for="detail">Details:</label>
             <textarea class="form-control rounded-0" name="detail" rows="3"
               placeholder="">Enter Detail</textarea>
             @error('detail')
@@ -79,7 +95,7 @@
 
 
          <div class="form-group mt-4">
-            <label for="comment">Comment:</label>
+            <label for="comment">Additional Comment:</label>
             <textarea class="form-control rounded-0" name="comment" rows="3"
               placeholder="">Enter Comment</textarea>
             @error('comment')

@@ -2,7 +2,17 @@
 @extends('layouts.app')
 
 @section('content')
-  <div> <p> {{session('mssg')}}</p> </div>
+
+@if (!is_null(session('mssg')) )
+<div class="container-fluid mt-4">
+<div class="container">
+  <div class="alert alert-success alert-dismissible">
+    <button type="button" class="close" data-dismiss="alert">x</button>
+    <p> {{session('mssg')}}</p>
+  </div> 
+</div>
+@endif
+
   <div class="container">
 
     <div class="table-title">
@@ -20,9 +30,12 @@
         <tr>
           <th><b>Date</b></th>
           <th><b>Time</b></th>
-          <th><b>Detail</b></th>
+          <th><b>Worker</b></th>
+          <th><b>Location</b></th>
+          <!-- <th><b>Details</b></th>
           <th><b>Image</b></th>
-          <th><b>Comment</b></th>
+          <th><b>Additional Comment</b></th> -->
+          <th><b>Status</b></th>
           <th class="text-center"><b>Action</b></th>
         </tr>
       </thead>
@@ -36,9 +49,16 @@
             {{ $incident->date }}
           </td>
           <td style="display: table-cell; vertical-align: middle;">{{ $incident->time }}</td>
-          <td style="display: table-cell; vertical-align: middle;">{{ $incident->detail }}</td>
+          <td style="display: table-cell; vertical-align: middle;">{{ $incident->worker->name }}</td>
+          <td style="display: table-cell; vertical-align: middle;">{{ $incident->location->fullLocation() }}</td>
+          <!-- <td style="display: table-cell; vertical-align: middle;">{{ $incident->detail }}</td>
           <td style="display: table-cell; vertical-align: middle;">{{ $incident->image }}</td>
-          <td style="display: table-cell; vertical-align: middle;">{{ $incident->comment }}</td>
+          <td style="display: table-cell; vertical-align: middle;">{{ $incident->comment }}</td> -->
+          <td style="display: table-cell; vertical-align: middle;">
+            <span style="height: 10px; width: 10px; margin-right: 4px;
+                                  background-color:{{ $incident->is_active ? 'rgb(255, 0, 0)' : 'rgb(0, 122, 16)' }};
+                                  border-radius: 50%; display: inline-block;"></span>
+             {{ $incident->is_active ? 'Unresolved' : 'Resolved' }}
           <td class="text-right" style="display: table-cell; vertical-align: middle; width:0.1%; white-space: nowrap;">
             <form action="/incidents/{{$incident->id}}" method="POST">
               @csrf
@@ -49,7 +69,7 @@
                     <i class="fas fa-edit"></i></a>
                 </button>
                 <button type="submit" class="btn btn-outline-danger waves-effect px-3"
-                  onclick="return confirm('{{ $incident->date}}\n\nAre you sure you want to delete this incident?\nWARNING: It will also delete the worklogs related to this location.\nHint: The safe option is just to edit this location and make it inactive.\n\nPress OK to Proceed with delete');">
+                  onclick="return confirm('Incident Date: {{ $incident->date}}\nIncident Time: {{ $incident->time}}\nReported By: {{ $incident->worker->name}}\n\nAre you sure you want to delete this incident?\n\nPress OK to Proceed with delete');">
                   <i class="fas fa-trash"></i>
                 </button>
               </div>
@@ -67,6 +87,8 @@
       @endif
 
     </table>
+
+    {{ $incidents->links() }}
 
   </div>
 @endsection

@@ -6,7 +6,7 @@
 
     <div class="row">
       <div class="col-sm-6">
-        <h2>Edit <b>existing</b> incident details</h2>
+        <h2>Update <b>existing</b> incident details</h2>
       </div>
     </div>
 
@@ -37,6 +37,22 @@
           @enderror
         </div>
 
+        <div class="form-group mt-4">
+          <label for="location">Location</label>
+          <select name="location" id="location" class="browser-default custom-select" required>
+            <option disabled selected value="">Select a site location</option>
+            @foreach ($locations as $location)
+              {{ $selected = $location->id == $incident->location->id ? 'selected' : '' }}
+              <option value="{{ $location->id }}" {{ $selected }}>{{ $location->fullLocation() }}</option>
+            @endforeach
+          </select>
+          @error('location')
+            <span class="text-danger">
+              <strong>{{ $message }}</strong>
+            </span>
+          @enderror
+        </div>
+
         <!-- <div class="form-group mt-4">
           <label>Location</label>
           <input type="text" name="location" class="form-control" placeholder="Location" autocomplete="false"
@@ -47,6 +63,7 @@
             </span>
           @enderror
         </div> -->
+
 
         <div class="form-group mt-4">
             <label for="detail">Detail:</label>
@@ -80,6 +97,24 @@
               </span>
             @enderror
           </div>
+
+          <div class="form-group mt-4">
+          <label>Status</label>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" id="active" name="is_active" value="1"
+              {{ $incident->is_active ? 'checked' : '' }}>
+            <label class="form-check-label" for="active">
+              Unresolved
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" id="inactive" name="is_active" value="0"
+              {{ $incident->is_active ? '' : 'checked' }}>
+            <label class="form-check-label" for="inactive">
+              Resolved
+            </label>
+          </div>
+        </div>
 
     
 

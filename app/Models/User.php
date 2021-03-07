@@ -48,4 +48,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Worklog::class);
     }
+
+    public function incidents()
+    {
+        return $this->hasMany(Incident::class);
+    }
 }
