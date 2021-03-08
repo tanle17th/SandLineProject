@@ -35,17 +35,7 @@ class IncidentController extends Controller
      
     }
 
-    public function edit($id)
-    {
-        // use $id to query the db
-        $incident = Incident::findOrFail($id);
-
-         $locations = Location::all();
-
-        return view('incidents.edit', [ 'incident' => $incident, 'locations' => $locations ]);
     
-    }
-
     public function create()
     {
         $locations = Location::where('is_active', true)->get();
@@ -53,7 +43,7 @@ class IncidentController extends Controller
         return view('incidents.create', ['locations' => $locations,]);
     }
 
-    public function store()
+    public function store(Request $request)
     {
         // error_log("NO");
         // error_log(request('date'));
@@ -73,6 +63,14 @@ class IncidentController extends Controller
         //         'comment' => 'required'
         //     ]);
 
+        $image = $request->file('file');
+        if (is_null($image)){
+            $imageName = request('image');
+        }else{
+            $imageName = time().'.'.$image->extension();
+            $image->move(public_path('images'),$imageName);
+        }
+        
         $incident = new Incident();
 
         $incident->user_id = Auth::user()->id;
@@ -80,8 +78,10 @@ class IncidentController extends Controller
         $incident->date = request('date');
         $incident->time = request('time');
         $incident->detail = request('detail');
-        $incident->image = request('image');
+        $incident->image = $imageName;
         $incident->comment = request('comment');
+
+        
         
        //  error_log($incident);
          error_log($incident->save());
@@ -90,26 +90,56 @@ class IncidentController extends Controller
         return redirect(route('dashboard'))->with('mssg', 'Incident added successfully');
     }
 
-    public function update($id)
+    public function edit($id)
     {
+        // use $id to query the db
+        $incident = Incident::findOrFail($id);
 
-        request()->validate([
-            'date' => 'required',
-            'time' => 'required',
-            'location' => 'required',
-            'detail' => 'required',
-            'image' => 'required',
-            'comment' => 'required'
-        ]);
+         $locations = Location::all();
 
+        return view('incidents.edit', [ 'incident' => $incident, 'locations' => $locations ]);
+    
+    }
+
+
+    public function update(Request $request)
+    {
+        error_log("NO");
+
+        // request()->validate([
+        //     'date' => 'required',
+        //     'time' => 'required',
+        //     'location' => 'required',
+        //     'detail' => 'required',
+        //     'image' => 'required',
+        //     'comment' => 'required'
+        // ]);
+
+        error_log("YES");
+
+        // $image = $request->file('file');
+        // $imageName = time().'.'.$image->extension();
+        // $image->move(public_path('images'),$imageName);
+
+        $image = $request->file('file');
+        if (is_null($image)){
+            $imageName = request('image');
+        }else{
+            $imageName = time().'.'.$image->extension();
+            $image->move(public_path('images'),$imageName);
+        }
+        
+        error_log("YES");
+        error_log($image);
+        
         $incident = Incident::findOrFail(request('id'));
         
 
         $incident->date = request('date');
         $incident->time = request('time');
-         $incident->location_id = request('location');
+        $incident->location_id = request('location');
         $incident->detail = request('detail');
-        $incident->image = request('image');
+        $incident->image = $imageName;
         $incident->comment = request('comment');
         $incident->is_active = request('is_active');
 

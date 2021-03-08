@@ -76,7 +76,7 @@
             @enderror
           </div>
 
-        <div class="form-group mt-4">
+        <!-- <div class="form-group mt-4">
           <label>Image</label>
           <input type="text" name="image" class="form-control" placeholder="Image" autocomplete="false"
             autocomplete='off' value="{{ $incident->image }}" required>
@@ -85,7 +85,30 @@
               <strong>{{ $message }}</strong>
             </span>
           @enderror
+        </div> -->
+
+        <!-- <div class="form-group mt-4">
+          <label for file>Upload Image:</label>
+          <input type="file" name="file" class="form-control" src="{{ asset('images')}}/{{$incident->image}}" style="max-width:120px;" onchange="previewFile(this)" />
+          <img id="previewImage" alt="Incident Image" style="max-width:130px;margin-top:20px;" />
+          @error('file')
+            <span class="text-danger">
+              <strong>{{ $message }}</strong>
+            </span>
+          @enderror
+        </div> -->
+
+        <div class="form-group mt-4">
+          <label for file>Upload Image:</label>
+          <input type="file" name="file" class="form-control" onchange="previewFile(this)" />
+          <img id="previewImage" alt="Incident Image" src="{{ asset('images')}}/{{$incident->image}}" style="max-width:130px;margin-top:20px;" />
+          @error('file')
+            <span class="text-danger">
+              <strong>{{ $message }}</strong>
+            </span>
+          @enderror
         </div>
+
 
         <div class="form-group mt-4">
             <label for="comment">Comment:</label>
@@ -127,3 +150,17 @@
   </div>
 
 @endsection
+
+<script>
+    function previewFile(input){
+      var file=$("input[type=file]").get(0).files[0];
+      if(file) 
+      {
+        var reader = new FileReader();
+        reader.onload = function(){
+          $('#previewImage').altr("src",reader.result);
+        }
+        reader.readAsDataURL(file);
+      }
+    }
+</script>

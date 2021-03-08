@@ -9,8 +9,10 @@ class Incident extends Model
 {
     use HasFactory;
 
+    // protected $table = "incidents";
+
     /**
-     * Get the worker that belongs to this worklog.
+     * Get the worker that belongs to this incident.
      */
     public function user()
     {

@@ -21,6 +21,9 @@
           <h2>Manage <b>Incidents</b></h2>
         </div>
         <div class="col-sm-6">
+          <div class="float-right">
+            <a href="{{ route('incidents.create') }}" class="btn btn-success justify-content-end">Add New Incident</a>
+          </div>
         </div>
       </div>
     </div>
@@ -32,9 +35,9 @@
           <th><b>Time</b></th>
           <th><b>Worker</b></th>
           <th><b>Location</b></th>
-          <!-- <th><b>Details</b></th>
+          <!-- <th><b>Details</b></th> -->
           <th><b>Image</b></th>
-          <th><b>Additional Comment</b></th> -->
+          <!-- <th><b>Additional Comment</b></th> -->
           <th><b>Status</b></th>
           <th class="text-center"><b>Action</b></th>
         </tr>
@@ -51,9 +54,10 @@
           <td style="display: table-cell; vertical-align: middle;">{{ $incident->time }}</td>
           <td style="display: table-cell; vertical-align: middle;">{{ $incident->worker->name }}</td>
           <td style="display: table-cell; vertical-align: middle;">{{ $incident->location->fullLocation() }}</td>
-          <!-- <td style="display: table-cell; vertical-align: middle;">{{ $incident->detail }}</td>
-          <td style="display: table-cell; vertical-align: middle;">{{ $incident->image }}</td>
-          <td style="display: table-cell; vertical-align: middle;">{{ $incident->comment }}</td> -->
+          <!-- <td style="display: table-cell; vertical-align: middle;">{{ $incident->detail }}</td> -->
+          <!-- <td style="display: table-cell; vertical-align: middle;"> {{ $incident->image == null? 'No Image': 'See Details'}}</td> -->
+          <td><img src="{{ asset('images')}}/{{$incident->image}}" style="max-width:120px;"/></td>
+          <!-- <td style="display: table-cell; vertical-align: middle;">{{ $incident->comment }}</td> -->
           <td style="display: table-cell; vertical-align: middle;">
             <span style="height: 10px; width: 10px; margin-right: 4px;
                                   background-color:{{ $incident->is_active ? 'rgb(255, 0, 0)' : 'rgb(0, 122, 16)' }};
