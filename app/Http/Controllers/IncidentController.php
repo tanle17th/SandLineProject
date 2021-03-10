@@ -27,7 +27,7 @@ class IncidentController extends Controller
      //   $incidents = Incident::orderBy('time', 'desc')->get();
      //   $incidents = Incident::where('detail', 'testing2 detail')->get();
       //  $incidents = Incident::latest()->get();
-        $incidents = Incident::latest()->paginate(10);
+        $incidents = Incident::latest()->paginate(5);
 
 
       //  return view('incidents.index');
@@ -45,14 +45,14 @@ class IncidentController extends Controller
 
     public function store(Request $request)
     {
-        // error_log("NO");
-        // error_log(request('date'));
-        // error_log(request('time'));
-        // error_log(request('location'));
-        // error_log(request('detail'));
-        // error_log(request('image'));
-        // error_log(request('comment'));
-        // error_log("YES");
+        error_log("START CREATE");
+        error_log(request('date'));
+        error_log(request('time'));
+        error_log(request('location'));
+        error_log(request('detail'));
+        error_log(request('file'));
+        error_log(request('comment'));
+        error_log("END CREATE");
 
         //  request()->validate([
         //         'date' => 'required',
@@ -104,7 +104,14 @@ class IncidentController extends Controller
 
     public function update(Request $request)
     {
-        error_log("NO");
+        error_log("START UPDATE");
+
+        error_log(request('date'));
+        error_log(request('time'));
+        error_log(request('location'));
+        error_log(request('detail'));
+        error_log(request('file'));
+        error_log(request('comment'));
 
         // request()->validate([
         //     'date' => 'required',
@@ -115,7 +122,7 @@ class IncidentController extends Controller
         //     'comment' => 'required'
         // ]);
 
-        error_log("YES");
+        error_log("END UPDATE");
 
         // $image = $request->file('file');
         // $imageName = time().'.'.$image->extension();
@@ -131,7 +138,7 @@ class IncidentController extends Controller
         
         error_log("YES");
         error_log($image);
-        
+
         $incident = Incident::findOrFail(request('id'));
         
 

@@ -66,10 +66,20 @@
             @enderror
         </div>
 
-        <div class="form-group mt-4">
+        <!-- <div class="form-group mt-4">
           <label for file>Upload Image:</label>
           <input type="file" name="file" class="form-control" onchange="previewFile(this)" />
           <img id="previewImage" alt="Incident Image" style="max-width:130px;margin-top:20px;" />
+          @error('file')
+            <span class="text-danger">
+              <strong>{{ $message }}</strong>
+            </span>
+          @enderror
+        </div> -->
+
+        <div class="form-group mt-4">
+          <label for file>Upload Image:</label>
+          <input type="file" name="file" class="form-control" />
           @error('file')
             <span class="text-danger">
               <strong>{{ $message }}</strong>

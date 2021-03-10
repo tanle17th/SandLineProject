@@ -12,7 +12,7 @@
 
     <div class="row">
 
-      <form class="col-sm-6" action="/incidents/{{$incident->id}}" method="POST" autocomplete="off">
+      <form class="col-sm-6" action="/incidents/{{$incident->id}}" method="POST" enctype="multipart/form-data">
         @csrf
 
         <div class="form-group mt-4">
@@ -76,32 +76,10 @@
             @enderror
           </div>
 
-        <!-- <div class="form-group mt-4">
-          <label>Image</label>
-          <input type="text" name="image" class="form-control" placeholder="Image" autocomplete="false"
-            autocomplete='off' value="{{ $incident->image }}" required>
-          @error('image')
-            <span class="text-danger">
-              <strong>{{ $message }}</strong>
-            </span>
-          @enderror
-        </div> -->
-
-        <!-- <div class="form-group mt-4">
-          <label for file>Upload Image:</label>
-          <input type="file" name="file" class="form-control" src="{{ asset('images')}}/{{$incident->image}}" style="max-width:120px;" onchange="previewFile(this)" />
-          <img id="previewImage" alt="Incident Image" style="max-width:130px;margin-top:20px;" />
-          @error('file')
-            <span class="text-danger">
-              <strong>{{ $message }}</strong>
-            </span>
-          @enderror
-        </div> -->
-
         <div class="form-group mt-4">
           <label for file>Upload Image:</label>
           <input type="file" name="file" class="form-control" onchange="previewFile(this)" />
-          <img id="previewImage" alt="Incident Image" src="{{ asset('images')}}/{{$incident->image}}" style="max-width:130px;margin-top:20px;" />
+          <img id="previewImage" alt="Incident Image" src="{{ asset('images')}}/{{$incident->image}}" style="max-width:540px;margin-top:20px;" />
           @error('file')
             <span class="text-danger">
               <strong>{{ $message }}</strong>
