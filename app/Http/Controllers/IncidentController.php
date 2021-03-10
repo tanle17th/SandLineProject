@@ -65,7 +65,7 @@ class IncidentController extends Controller
 
         $image = $request->file('file');
         if (is_null($image)){
-            $imageName = request('image');
+            $imageName = request('file');
         }else{
             $imageName = time().'.'.$image->extension();
             $image->move(public_path('images'),$imageName);
@@ -86,9 +86,13 @@ class IncidentController extends Controller
        //  error_log($incident);
          error_log($incident->save());
 
-     //   return redirect('/index')->with('mssg', 'Incident added successfully');
-        return redirect(route('dashboard'))->with('mssg', 'Incident added successfully');
-     //   return redirect(route('incidents.list'))->with('mssg', 'Incident updated');
+      //  return redirect(route('dashboard'))->with('mssg', 'Incident added successfully');
+
+     if (Auth::user()->role == 'admin') {
+            return redirect(route('incidents.list'))->with('mssg', 'Incident added successfully');
+        } else {
+            return redirect(route('dashboard'))->with('mssg', 'Incident added successfully');
+        }
     }
 
     public function edit($id)
@@ -129,10 +133,17 @@ class IncidentController extends Controller
         // $imageName = time().'.'.$image->extension();
         // $image->move(public_path('images'),$imageName);
 
+        $incident = Incident::findOrFail(request('id'));
+
         $image = $request->file('file');
         if (is_null($image)){
-            $imageName = request('image');
-        }else{
+          //  $imageName = request('file');
+            $imageName = $incident->image;
+        }else if (is_null($incident->image)) {
+            $imageName = time().'.'.$image->extension();
+            $image->move(public_path('images'),$imageName);
+        }else {
+            unlink(public_path('images').'/'.$incident->image);
             $imageName = time().'.'.$image->extension();
             $image->move(public_path('images'),$imageName);
         }
@@ -140,9 +151,11 @@ class IncidentController extends Controller
         error_log("YES");
         error_log($image);
 
-        $incident = Incident::findOrFail(request('id'));
         
 
+        error_log($incident->image);
+        error_log("End");
+        
         $incident->date = request('date');
         $incident->time = request('time');
         $incident->location_id = request('location');
