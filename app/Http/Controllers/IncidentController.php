@@ -45,14 +45,14 @@ class IncidentController extends Controller
 
     public function store(Request $request)
     {
-        error_log("START CREATE");
-        error_log(request('date'));
-        error_log(request('time'));
-        error_log(request('location'));
-        error_log(request('detail'));
-        error_log(request('file'));
-        error_log(request('comment'));
-        error_log("END CREATE");
+        // error_log("START CREATE");
+        // error_log(request('date'));
+        // error_log(request('time'));
+        // error_log(request('location'));
+        // error_log(request('detail'));
+        // error_log(request('file'));
+        // error_log(request('comment'));
+        // error_log("END CREATE");
 
         //  request()->validate([
         //         'date' => 'required',
@@ -88,6 +88,7 @@ class IncidentController extends Controller
 
      //   return redirect('/index')->with('mssg', 'Incident added successfully');
         return redirect(route('dashboard'))->with('mssg', 'Incident added successfully');
+     //   return redirect(route('incidents.list'))->with('mssg', 'Incident updated');
     }
 
     public function edit($id)
@@ -104,14 +105,14 @@ class IncidentController extends Controller
 
     public function update(Request $request)
     {
-        error_log("START UPDATE");
+        // error_log("START UPDATE");
 
-        error_log(request('date'));
-        error_log(request('time'));
-        error_log(request('location'));
-        error_log(request('detail'));
-        error_log(request('file'));
-        error_log(request('comment'));
+        // error_log(request('date'));
+        // error_log(request('time'));
+        // error_log(request('location'));
+        // error_log(request('detail'));
+        // error_log(request('file'));
+        // error_log(request('comment'));
 
         // request()->validate([
         //     'date' => 'required',
@@ -122,7 +123,7 @@ class IncidentController extends Controller
         //     'comment' => 'required'
         // ]);
 
-        error_log("END UPDATE");
+        // error_log("END UPDATE");
 
         // $image = $request->file('file');
         // $imageName = time().'.'.$image->extension();
@@ -160,6 +161,14 @@ class IncidentController extends Controller
     {
 
         $incident = Incident::findOrFail($id);
+        
+        // remove image from public folder
+        if (!is_null($incident->image))
+        unlink(public_path('images').'/'.$incident->image);
+
+       error_log("DELETING");
+       error_log($incident->image);
+
         $incident->delete();
 
        return redirect(route('incidents.list'))->with('mssg', 'Incident deleted');
