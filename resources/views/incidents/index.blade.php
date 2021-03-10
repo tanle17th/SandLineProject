@@ -56,7 +56,8 @@
           <td style="display: table-cell; vertical-align: middle;">{{ $incident->location->fullLocation() }}</td>
           <!-- <td style="display: table-cell; vertical-align: middle;">{{ $incident->detail }}</td> -->
           <!-- <td style="display: table-cell; vertical-align: middle;"> {{ $incident->image == null? 'No Image': 'See Details'}}</td> -->
-          <td><img src="{{ asset('images')}}/{{$incident->image}}" style="max-width:120px;"/></td>
+          <td> <img src={{ is_null($incident->image)? "/images/no-image.jpg" : "/images/$incident->image" }} style="max-width:120px;"/></td>
+          <!-- <td><div><img src= "{{ asset('images')}}/{{$incident->image}}" style="max-width:120px;"/></div></td> -->
           <!-- <td style="display: table-cell; vertical-align: middle;">{{ $incident->comment }}</td> -->
           <td style="display: table-cell; vertical-align: middle;">
             <span style="height: 10px; width: 10px; margin-right: 4px;
