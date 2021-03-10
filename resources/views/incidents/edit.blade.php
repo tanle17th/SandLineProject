@@ -78,8 +78,8 @@
 
         <div class="form-group mt-4">
           <label for file>Upload Image:</label>
+          <img id="previewImage" alt="Incident Image" src="{{ asset('images')}}/{{$incident->image}}" style="max-width:540px;margin-bottom:5px;" />
           <input type="file" name="file" class="form-control" onchange="previewFile(this)" />
-          <img id="previewImage" alt="Incident Image" src="{{ asset('images')}}/{{$incident->image}}" style="max-width:540px;margin-top:20px;" />
           @error('file')
             <span class="text-danger">
               <strong>{{ $message }}</strong>
@@ -121,6 +121,9 @@
 
         <div class="form-group mt-4">
           <input type="submit" class="btn btn-success" value="Update">
+          <div class="form-group">
+            <a href="{{ route('incidents.list') }}" class="btn btn-dark justify-content-end">Back To List</a>
+          </div>
         </div>
       </form>
 
