@@ -19,10 +19,13 @@ class CreateTimecardsTable extends Migration
             $table->date('date');
             $table->dateTime('start_time');
             $table->dateTime('end_time')->nullable();
-            $table->foreignId('start_location_id')->constrained()->onDelete('cascade');
-            $table->foreignId('end_location_id')->constrained()->onDelete('cascade');
+            // Google Maps returns the full location
+            // Therefore, there is no need of extra location tables
+            // Start/End Timecard Location by now will be just simple String.
+            $table->string('start_location');
+            $table->string('end_location')->nullable();
             $table->string('comment')->nullable();
-            $table->time('totalHours')->nullable();
+            $table->time('total_hours')->nullable();
             $table->timestamps();
         });
     }

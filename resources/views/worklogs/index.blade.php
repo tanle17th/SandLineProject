@@ -14,6 +14,16 @@
 
         <h3><b>Ongoing</b> Worklogs</h3>
 
+        {{-- Added alert message when successfully begin/end a property log --}}
+        @if (session()->has('msg'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>{{ session()->get('msg') }}</strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        @endif
+
         <table class="table table-hover mt-3 border table-bordered">
           <thead class="indigo white-text">
             <tr>
