@@ -1,7 +1,3 @@
-<html>
-<head>
-</head>
-<body>
 @extends('layouts.app')
 
 @section('content')
@@ -66,17 +62,6 @@
             @enderror
         </div>
 
-        <!-- <div class="form-group mt-4">
-          <label for file>Upload Image:</label>
-          <input type="file" name="file" class="form-control" onchange="previewFile(this)" />
-          <img id="previewImage" alt="Incident Image" style="max-width:130px;margin-top:20px;" />
-          @error('file')
-            <span class="text-danger">
-              <strong>{{ $message }}</strong>
-            </span>
-          @enderror
-        </div> -->
-
         <div class="form-group mt-4">
           <label for file>Upload Image:</label>
           <input type="file" name="file" class="form-control" />
@@ -98,24 +83,8 @@
             @enderror
           </div>
 
-        <!-- <div class="form-group mt-4">
-          <label>Status</label>
-          <div class="form-check">
-            <input class="form-check-input" type="radio" id="active" name="is_active" value="1" checked>
-            <label class="form-check-label" for="active">
-              Active
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="radio" id="inactive" name="is_active" value="0">
-            <label class="form-check-label" for="inactive">
-              Inactive
-            </label>
-          </div>
-        </div> -->
-
         <div class="form-group mt-4">
-          <input type="submit" class="btn btn-success" value="Create">
+          <input type="submit" class="btn btn-green" value="Create">
         </div>
       </form>
 
@@ -123,18 +92,4 @@
   </div>
 
 @endsection
-<script>
-    function previewFile(input){
-      var file=$("input[type=file]").get(0).files[0];
-      if(file) 
-      {
-        var reader = new FileReader();
-        reader.onload = function(){
-          $('#previewImage').altr("src",reader.result);
-        }
-        reader.readAsDataURL(file);
-      }
-    }
-</script>
-</body>
-</html>
+

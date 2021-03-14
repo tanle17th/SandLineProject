@@ -53,18 +53,6 @@
           @enderror
         </div>
 
-        <!-- <div class="form-group mt-4">
-          <label>Location</label>
-          <input type="text" name="location" class="form-control" placeholder="Location" autocomplete="false"
-            autocomplete='off' value="{{ $incident->location }}" required>
-          @error('location')
-            <span class="text-danger">
-              <strong>{{ $message }}</strong>
-            </span>
-          @enderror
-        </div> -->
-
-
         <div class="form-group mt-4">
             <label for="detail">Detail:</label>
             <textarea class="form-control rounded-0" name="detail" rows="3"
@@ -77,9 +65,9 @@
           </div>
 
         <div class="form-group mt-4">
-          <label for file>Upload Image:</label>
-          <img id="previewImage" alt="Incident Image" src="{{ asset('images')}}/{{$incident->image}}" style="max-width:540px;margin-bottom:5px;" />
-          <input type="file" name="file" class="form-control" onchange="previewFile(this)" />
+          <label for file>Image:</label>
+           <img src="{{ asset('images')}}/{{$incident->image}}" style="max-width:540px;margin-bottom:5px;" />
+          <input type="file" name="file" class="form-control" />
           @error('file')
             <span class="text-danger">
               <strong>{{ $message }}</strong>
@@ -117,12 +105,10 @@
           </div>
         </div>
 
-    
-
         <div class="form-group mt-4">
-          <input type="submit" class="btn btn-success" value="Update">
+          <input type="submit" class="btn btn-green" value="Update">
           <div class="form-group">
-            <a href="{{ route('incidents.list') }}" class="btn btn-dark justify-content-end">Back To List</a>
+            <a href="{{ route('incidents.list') }}" class="btn btn-purple justify-content-end">Back To List</a>
           </div>
         </div>
       </form>
@@ -131,17 +117,3 @@
   </div>
 
 @endsection
-
-<script>
-    function previewFile(input){
-      var file=$("input[type=file]").get(0).files[0];
-      if(file) 
-      {
-        var reader = new FileReader();
-        reader.onload = function(){
-          $('#previewImage').altr("src",reader.result);
-        }
-        reader.readAsDataURL(file);
-      }
-    }
-</script>

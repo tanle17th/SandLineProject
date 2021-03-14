@@ -12,13 +12,6 @@ use Illuminate\Support\Facades\Validator;
 
 class IncidentController extends Controller
 {
-
-    // public function __construct()
-    // {
-    //     $this->middleware('auth');
-    // }
-
-
     public function index()
     {
        // $locations = Incident::paginate(15);
@@ -45,23 +38,6 @@ class IncidentController extends Controller
 
     public function store(Request $request)
     {
-        // error_log("START CREATE");
-        // error_log(request('date'));
-        // error_log(request('time'));
-        // error_log(request('location'));
-        // error_log(request('detail'));
-        // error_log(request('file'));
-        // error_log(request('comment'));
-        // error_log("END CREATE");
-
-        //  request()->validate([
-        //         'date' => 'required',
-        //         'timer' => 'required',
-        //         'location' => 'required',
-        //         'detail' => 'required',
-        //         'image' => 'required',
-        //         'comment' => 'required'
-        //     ]);
 
         $image = $request->file('file');
         if (is_null($image)){
@@ -81,12 +57,8 @@ class IncidentController extends Controller
         $incident->image = $imageName;
         $incident->comment = request('comment');
 
-        
-        
-       //  error_log($incident);
-         error_log($incident->save());
-
-      //  return redirect(route('dashboard'))->with('mssg', 'Incident added successfully');
+        // error_log($incident->save());
+        $incident->save();
 
      if (Auth::user()->role == 'admin') {
             return redirect(route('incidents.list'))->with('mssg', 'Incident added successfully');
@@ -102,37 +74,12 @@ class IncidentController extends Controller
 
          $locations = Location::all();
 
-        return view('incidents.edit', [ 'incident' => $incident, 'locations' => $locations ]);
-    
+        return view('incidents.edit', [ 'incident' => $incident, 'locations' => $locations ]);  
     }
 
 
     public function update(Request $request)
-    {
-        // error_log("START UPDATE");
-
-        // error_log(request('date'));
-        // error_log(request('time'));
-        // error_log(request('location'));
-        // error_log(request('detail'));
-        // error_log(request('file'));
-        // error_log(request('comment'));
-
-        // request()->validate([
-        //     'date' => 'required',
-        //     'time' => 'required',
-        //     'location' => 'required',
-        //     'detail' => 'required',
-        //     'image' => 'required',
-        //     'comment' => 'required'
-        // ]);
-
-        // error_log("END UPDATE");
-
-        // $image = $request->file('file');
-        // $imageName = time().'.'.$image->extension();
-        // $image->move(public_path('images'),$imageName);
-
+    {     
         $incident = Incident::findOrFail(request('id'));
 
         $image = $request->file('file');
@@ -148,13 +95,6 @@ class IncidentController extends Controller
             $image->move(public_path('images'),$imageName);
         }
         
-        error_log("YES");
-        error_log($image);
-
-        
-
-        error_log($incident->image);
-        error_log("End");
         
         $incident->date = request('date');
         $incident->time = request('time');
@@ -185,6 +125,5 @@ class IncidentController extends Controller
         $incident->delete();
 
        return redirect(route('incidents.list'))->with('mssg', 'Incident deleted');
-      // return redirect('/index')->with('mssg', 'Incident Deleted');
     }
 }
