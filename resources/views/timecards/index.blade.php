@@ -112,8 +112,18 @@
                     <h1 class="mb-3">All Time Cards</h1>
                 </div>
                 <div class="col-4" style="text-align:end">
-                <a href="{{ route('timecards.list') }}">
-                    <i class="fas fa-file-excel mr-2"></i> Export All Timecards to Excel
+                {{-- Export all Timecards being displayed in the List --}}
+                {{-- Pass all filter values to the export class (TimecardExport) to --}}
+                {{-- actually read filtered data from the database in export class--}}
+                <a href="{{ route('timecards.export', [
+                        'fromDate' => $fromDate,
+                        'toDate' => $toDate,
+                        'select_worker' => $select_worker
+                ]) }}">
+                <button class="btn btn-blue-grey"
+                onclick="return confirm('You are going to export all Timecards being displayed. Do you want to continue?');">
+                    <i class="fas fa-file-excel mr-2"></i> Export
+                </button>
                 </a>
                 </div>
             </div>
@@ -202,6 +212,7 @@
                 {{-- Prints out the header of the table --}}
                 <thead class="thead-dark">
                 <tr>
+                    <th scope="col">#</th>
                     <th scope="col">Name</th>
                     <th scope="col">Date</th>
                     <th scope="col">Start Time</th>
@@ -218,7 +229,7 @@
                 <tbody>
                 @if ($allTimecards->isEmpty())
                     <tr>
-                    <td colspan="10">
+                    <td colspan="11">
                         Nothing to display
                     </td>
                     </tr>
@@ -229,6 +240,7 @@
                          Display them in each td --}}
                     @foreach ($allTimecards as $allTimecard)
                     <tr>
+                        <th scope="row">{{ $loop->iteration }}</th>
                         <th scope="row">{{ $allTimecard->worker->name }}</th>
                         <td>{{ $allTimecard->date }}</td>
                         <td>{{ explode(' ', $allTimecard->start_time)[1] }}</td>
@@ -236,7 +248,7 @@
                         <td>{{ $allTimecard->start_location }}</td>
                         <td>{{ $allTimecard->end_location }}</td>
                         <td style="display: table-cell; text-align:center; vertical-align: middle">
-                            <span class="badge badge-pill badge-light">{{ explode(':', $allTimecard->total_hours)[0] }}</span>
+                            <span class="badge badge-pill badge-light"><b>{{ explode(':', $allTimecard->total_hours)[0] }}</b></span>
                         </td>
                         <td style="display: table-cell; text-align:center; vertical-align: middle;">
                             <span class="badge badge-pill badge-light">{{ explode(':', $allTimecard->total_hours)[1] }}</span>
@@ -445,7 +457,7 @@
                          Display them in each td --}}
                     @foreach ($allTimecards as $allTimecard)
                     <tr>
-                        <th scope="row">{{ $eachIndex++ }}</th>
+                        <th scope="row">{{ $loop->iteration }}</th>
                         <td>{{ $allTimecard->date }}</td>
                         <td>{{ explode(' ', $allTimecard->start_time)[1] }}</td>
                         <td>{{ explode(' ', $allTimecard->end_time)[1] }}</td>

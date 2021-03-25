@@ -43,10 +43,10 @@
     ),
     array(
     'header' => 'Incident Management',
-    'headerImageURL' => 'https://image.shutterstock.com/image-photo/incident-report-form-wooden-stamp-260nw-612096257.jpg',
+    'headerImageURL' => 'https://cdn.wpforms.com/wp-content/uploads/2020/05/Incident-Management.png',
     'message' => 'Modify/Deactivate incident reports.',
     'buttonText' => 'Manage Incident Report',
-    'buttonLink' => route('workers.list'),
+    'buttonLink' => route('incidents.list'),
     )
     ];
     @endphp

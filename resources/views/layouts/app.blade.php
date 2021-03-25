@@ -100,6 +100,7 @@
     <!-- Only when creating a new Timecard should the scripts be passed into child blade, create.blade.php -->
     <!-- Two functions are passed: refresh-time
                                    geolocation  -->
+
     @if (\Request::is('timecards/create'))
     <div id="scripts">
     <script src="{{ asset('js/refresh-time.js') }}"></script>

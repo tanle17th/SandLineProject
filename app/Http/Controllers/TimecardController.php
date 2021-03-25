@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\TimecardExport;
+use App\Exports\TimecardExportView;
+use App\Exports\WorklogsExport;
 use App\Models\EndLocation;
 use App\Models\StartLocation;
 use App\Models\Timecard;
@@ -13,6 +16,7 @@ use Carbon\Carbon as CarbonCarbon;
 use Faker\Provider\cs_CZ\DateTime;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
 
 use function PHPUnit\Framework\isEmpty;
 use function PHPUnit\Framework\isNull;
@@ -22,6 +26,7 @@ use function PHPUnit\Framework\isNull;
 class TimecardController extends Controller
 {
 
+    private $exportTimecards = null;
     /**
      * This use middleware function to keep track of application's user
      * Only user HAS ACCOUNT in the application (Having credential in User table)
@@ -71,6 +76,7 @@ class TimecardController extends Controller
                     ->where('date', '>=', $fromDate)
                     ->where('date', '<=', $toDate)
                     ->latest()->paginate(50);
+                //$exportTimecards = $allTimecards;
             }
             // SECOND:
             // if only worker filter is selected (fromDate and toDate is empty) -> Get all timecards of that Worker and display
@@ -78,19 +84,22 @@ class TimecardController extends Controller
                 $allTimecards = Timecard::where('user_id', User::where('name', $select_worker)->first()->id)
                     ->whereNotNull('end_time')
                     ->latest()->paginate(50);
+                //$exportTimecards = $allTimecards;
             }
             // THIRD:
             // if worker is not selected (empty) but fromDate and toDate is filtered -> Get timecards based on that range of day and display
             elseif (empty($select_worker) and !empty($fromDate) and !empty($toDate)) {
                 $allTimecards = Timecard::whereNotNull('end_time')
                     ->where('date', '>=', $fromDate)
-                    ->where('date', '<=', $toDate)
+                    ->where('date', '<=', $toDate)->orderBy('user_id')
                     ->latest()->paginate(50);
+                //$exportTimecards = $allTimecards;
             }
             // FOURTH:
             // if none of the condition above is true -> Get ALL timecards of and display
             else {
                 $allTimecards = Timecard::whereNotNull('end_time')->latest()->paginate(50);
+                //$exportTimecards = $allTimecards;
             }
             // Get all on-going timecards:
             $onGoingTimecards = Timecard::whereNull('end_time')->latest()->get();
@@ -128,7 +137,6 @@ class TimecardController extends Controller
             'allTimecards' => $allTimecards,
             'is_admin' => $is_admin,
             'onGoingTimecards' => $onGoingTimecards,
-            'eachIndex' => '1',
             'allWorkers' => $allWorkers,
             'fromDate' => $fromDate,
             'toDate' => $toDate,
@@ -293,5 +301,25 @@ class TimecardController extends Controller
         // Redirect the route to the list
         // Log the message:
         return redirect(route('timecards.list'))->with('msg', 'Time Card deleted');
+    }
+
+    /**
+     * This method takes timecards.export route values
+     * and pass to export class
+     * Values are: 1/ Filter worker
+     *             2/ From Date
+     *             3/ To Date
+     */
+    public function export(Request $request)
+    {
+        //return redirect(route('timecards.list'));
+        error_log($request->select_worker);
+        error_log($request->get('fromDate'));
+        error_log($request->get('toDate'));
+        return Excel::download(new TimecardExport(
+            $request->select_worker,
+            $request->fromDate,
+            $request->toDate
+        ), 'Timecards(' . $request->fromDate . ' _ ' . $request->toDate . ').xlsx');
     }
 }

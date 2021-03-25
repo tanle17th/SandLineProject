@@ -93,14 +93,22 @@ Route::post('/timecards/{id}', [TimecardController::class, 'update'])->name('tim
 
 // ---> (Admin) Delete one Timecard:
 Route::delete('/timecards/{id}', [TimecardController::class, 'delete'])->name('timecards.delete')->middleware('auth.admin');
+
+// ---> (Admin) Export Timecards to Excel:
+Route::get('/exportTimecards', [TimecardController::class, 'export'])->name('timecards.export')->middleware('auth.admin');
 // ----------------------------------------------------------------------------------------------
 
 // Web route for Incident Report:
 // ---> Allow users to create new reports
 // ---> Allow users to submit the reports
+Route::get('/incidents', [IncidentController::class, 'index'])->name('incidents.list')->middleware('auth.admin');
+Route::get('/incidents/show', [IncidentController::class, 'show'])->name('incidents.show');
 Route::get('/incidents/create', [IncidentController::class, 'create'])->name('incidents.create');
-//Route::post('/timecards', [TimecardController::class, 'store'])->name('timecards.store');
-//Route::get('/timecards/list', [TimecardController::class, 'index'])->name('timecards.list');
+Route::post('/incidents/store', [IncidentController::class, 'store'])->name('incidents.store');
+Route::get('/incidents/{id}', [IncidentController::class, 'edit'])->name('incidents.edit')->middleware('auth.admin');
+Route::post('/incidents/{id}', [IncidentController::class, 'update'])->name('incidents.update')->middleware('auth.admin');
+Route::delete('/incidents/{id}', [IncidentController::class, 'delete'])->name('incidents.delete')->middleware('auth.admin');
+
 // ----------------------------------------------------------------------------------------------
 Route::get('/test', function () {
 

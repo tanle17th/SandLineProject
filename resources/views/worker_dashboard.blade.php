@@ -2,6 +2,16 @@
 
 @section('content')
 
+@if (session()->has('mssg'))
+<div class="container-fluid mt-4">
+<div class="container">
+  <div class="alert alert-success alert-dismissible">
+    <button type="button" class="close" data-dismiss="alert">×</button>
+    <p> {{session('mssg')}}</p>
+  </div>
+</div>
+@endif
+
 <div class="container-fluid mt-4">
 
     {{-- This php block here implements the function to decide whether
