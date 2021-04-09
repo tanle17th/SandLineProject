@@ -54,7 +54,7 @@
         </div>
 
         <div class="form-group mt-4">
-            <label for="detail">Detail:</label>
+            <label for="detail">Incident Details:</label>
             <textarea class="form-control rounded-0" name="detail" rows="3"
               placeholder="">{{ $incident->detail }}</textarea>
             @error('detail')

@@ -52,7 +52,7 @@
         </div>
 
         <div class="form-group mt-4">
-            <label for="detail">Details:</label>
+            <label for="detail">Incident Details:</label>
             <textarea class="form-control rounded-0" name="detail" rows="3"
               placeholder="">Enter Detail</textarea>
             @error('detail')

@@ -22,7 +22,8 @@ class IncidentController extends Controller
         //   $incidents = Incident::orderBy('time', 'desc')->get();
         //   $incidents = Incident::where('detail', 'testing2 detail')->get();
         //  $incidents = Incident::latest()->get();
-        $incidents = Incident::latest()->paginate(5);
+       # $incidents = Incident::latest()->paginate(5);
+        $incidents = Incident::where('is_active', true)->paginate(5);
 
 
         //  return view('incidents.index');
@@ -126,5 +127,29 @@ class IncidentController extends Controller
         $incident->delete();
 
         return redirect(route('incidents.list'))->with('mssg', 'Incident deleted');
+    }
+
+
+    public function filteredIncidents()
+    {
+
+        $type = request('incident_type');
+
+        switch ($type) {
+                case "all":
+                   $incidents = Incident::orderBy('is_active', 'desc')->paginate(5);
+                    break;
+                case "unresolved":
+                   $incidents = Incident::where('is_active', true)->paginate(5);
+                    break;
+                case "resolved":
+                   $incidents = Incident::where('is_active', false)->paginate(5);
+                   $color = "R";
+                    break;
+                default:
+                    $incidents = Incident::orderBy('is_active', 'desc')->paginate(5);
+          }
+
+    return view('incidents.index', ['incidents' => $incidents]);
     }
 }
