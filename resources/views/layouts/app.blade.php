@@ -12,6 +12,8 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    <script src="{{ asset('js/geolocation.js') }}"></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -19,11 +21,12 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
 </head>
 
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-dark shadow-sm" style="background-color: #272727;">
+        <nav class="navbar navbar-fixed-top navbar-expand-md navbar-dark shadow-sm " style="background-color: #272727;">
             <div class="container">
                 <a class="navbar-brand" href="{{ route('dashboard') }}">
                     <img src="/images/sandline_logo.png" height="30" alt="">
@@ -36,10 +39,23 @@
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav mr-auto">
-
+                    <!-- This displays quick links to lists of logs/timecards/reports -->
+                    <!-- Only be displayed in Worker side -->
+                    {{-- @if (\Request::is('login') or \Request::is('password/reset') or Auth::user()->role == 'admin')
+                    <ul class="navbar-nav"></ul>
+                    @else
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('worklogs.list') }}">Property Logs</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('timecards.list') }}">Time Cards</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Incident Reports</a>
+                        </li>
                     </ul>
-
+                    @endif --}}
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
@@ -80,6 +96,23 @@
             @yield('content')
         </main>
     </div>
+
+    <!-- Only when creating a new Timecard should the scripts be passed into child blade, create.blade.php -->
+    <!-- Two functions are passed: refresh-time
+                                   geolocation  -->
+
+    @if (\Request::is('timecards/create'))
+    <div id="scripts">
+    <script src="{{ asset('js/refresh-time.js') }}"></script>
+    <script
+    src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAPS_API_KEY') }}&callback=initMap&libraries=&v=weekly"
+    async
+    ></script>
+    @stack('scripts')
+    </div>
+    @endif
+
+
 </body>
 
 </html>

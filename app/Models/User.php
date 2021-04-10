@@ -48,4 +48,19 @@ class User extends Authenticatable
     {
         return $this->hasMany(Worklog::class);
     }
+
+    /**
+     * User has relationship with Timecard.
+     * Therefore, to retrieve Timecard for a specific
+     * user, we use hasMany relationship.
+     */
+    public function timecards()
+    {
+        return $this->hasMany(Timecard::class);
+    }
+
+    public function incidents()
+    {
+        return $this->hasMany(Incident::class);
+    }
 }

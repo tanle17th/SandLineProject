@@ -39,14 +39,14 @@
     'headerImageURL' => 'https://media.istockphoto.com/photos/date-and-time-reminder-or-deadline-concept-small-red-alarm-clock-on-picture-id1151795710?k=6&m=1151795710&s=612x612&w=0&h=Z8N5xZJmgyD0m5Ei3ONBfMXRDTI2FT8XQWSFPFmpwSo=',
     'message' => 'Track/Modify time cards.',
     'buttonText' => 'Manage Time Card',
-    'buttonLink' => route('workers.list'),
+    'buttonLink' => route('timecards.list'),
     ),
     array(
     'header' => 'Incident Management',
     'headerImageURL' => 'https://cdn.wpforms.com/wp-content/uploads/2020/05/Incident-Management.png',
     'message' => 'Modify/Deactivate incident reports.',
     'buttonText' => 'Manage Incident Report',
-    'buttonLink' => route('workers.list'),
+    'buttonLink' => route('incidents.list'),
     )
     ];
     @endphp

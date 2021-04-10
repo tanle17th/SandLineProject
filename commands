@@ -42,3 +42,11 @@ php artisan migrate:refresh --path=/database/migrations/xxxx_xx_xx_xxxxxx_create
 
 -- Hard database reset and seed some data for testing
 php artisan migrate:refresh --seed
+
+-- Set KEY in env file
+GOOGLE_MAPS_API_KEY=YOUR_API_KEY
+-> Call it from blade:
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAPS_API_KEY') }}&callback=initMap&libraries=&v=weekly"
+      async>
+    </script>

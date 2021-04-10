@@ -3,12 +3,15 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\IncidentController;
 use App\Http\Controllers\WorkerController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\LocationController;
+use App\Http\Controllers\TimecardController;
 use App\Http\Controllers\WorklogController;
 use App\Http\Controllers\WorklogsExportController;
 use Facade\FlareClient\View;
+use GuzzleHttp\Promise\Create;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,6 +30,7 @@ Route::get('/', function () {
 });
 
 // Disable registration module
+// We can only log in, can not register for new user account
 Auth::routes([
     'register' => false
 ]);
@@ -69,8 +73,44 @@ Route::get('/worklogs/{id}', [WorklogController::class, 'edit'])->name('worklogs
 Route::post('/worklogs/{id}', [WorklogController::class, 'update'])->name('worklogs.edit')->middleware('auth.admin');
 Route::delete('/worklogs/{id}', [WorklogController::class, 'delete'])->name('worklogs.delete')->middleware('auth.admin');
 
+// Web route for Timecard:
+// ---> (Worker) Allow users to Start the Workday
+// ---> (Worker) Allow users to End the Workday
+Route::get('/timecards/create', [TimecardController::class, 'create'])->name('timecards.create');
+Route::post('/timecards', [TimecardController::class, 'store'])->name('timecards.store');
 
+// ---> (All) Take to List Time Cards:
+Route::get('/timecards', [TimecardController::class, 'index'])->name('timecards.list');
 
+// ---> (Admin) Filter the List of Time Cards by Name and Date:
+Route::post('/timecards/filterByNameAndDate', [TimecardController::class, 'index'])->name('timecards.filtered.admin')->middleware('auth.admin');
+// ---> (Worker) Filter the List of Time Cards by Date only:
+Route::post('/timecards/filterByDate', [TimecardController::class, 'index'])->name('timecards.filtered.worker');
+
+// ---> (Admin) Edit one Timecard:
+Route::get('/timecards/{id}', [TimecardController::class, 'edit'])->name('timecards.edit')->middleware('auth.admin');
+Route::post('/timecards/{id}', [TimecardController::class, 'update'])->name('timecards.edit')->middleware('auth.admin');
+
+// ---> (Admin) Delete one Timecard:
+Route::delete('/timecards/{id}', [TimecardController::class, 'delete'])->name('timecards.delete')->middleware('auth.admin');
+
+// ---> (Admin) Export Timecards to Excel:
+Route::get('/exportTimecards', [TimecardController::class, 'export'])->name('timecards.export')->middleware('auth.admin');
+// ----------------------------------------------------------------------------------------------
+
+// Web route for Incident Report:
+// ---> Allow users to create new reports
+// ---> Allow users to submit the reports
+Route::get('/incidents', [IncidentController::class, 'index'])->name('incidents.list')->middleware('auth.admin');
+Route::get('/incidents/show', [IncidentController::class, 'show'])->name('incidents.show');
+Route::get('/incidents/create', [IncidentController::class, 'create'])->name('incidents.create');
+Route::post('/incidents/store', [IncidentController::class, 'store'])->name('incidents.store');
+Route::get('/incidents/{id}', [IncidentController::class, 'edit'])->name('incidents.edit')->middleware('auth.admin');
+Route::post('/incidents/{id}', [IncidentController::class, 'update'])->name('incidents.update')->middleware('auth.admin');
+Route::delete('/incidents/{id}', [IncidentController::class, 'delete'])->name('incidents.delete')->middleware('auth.admin');
+Route::get('/incident/filtered', [IncidentController::class, 'filteredIncidents'])->name('incidents.list.filtered')->middleware('auth.admin');
+
+// ----------------------------------------------------------------------------------------------
 Route::get('/test', function () {
 
     // return Illuminate\Support\Facades\Hash::make('test@123');
