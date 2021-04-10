@@ -52,9 +52,9 @@
         </div>
 
         <div class="form-group mt-4">
-            <label for="detail">Details:</label>
+            <label for="detail">Incident Details:</label>
             <textarea class="form-control rounded-0" name="detail" rows="3"
-              placeholder="">Enter Detail</textarea>
+            placeholder="Enter details...." required></textarea>
             @error('detail')
               <span class="text-danger">
                 <strong>{{ $message }}</strong>
@@ -75,7 +75,7 @@
          <div class="form-group mt-4">
             <label for="comment">Additional Comment:</label>
             <textarea class="form-control rounded-0" name="comment" rows="3"
-              placeholder="">Enter Comment</textarea>
+              placeholder="Enter comment...."></textarea>
             @error('comment')
               <span class="text-danger">
                 <strong>{{ $message }}</strong>

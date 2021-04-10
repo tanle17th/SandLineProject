@@ -108,6 +108,7 @@ Route::post('/incidents/store', [IncidentController::class, 'store'])->name('inc
 Route::get('/incidents/{id}', [IncidentController::class, 'edit'])->name('incidents.edit')->middleware('auth.admin');
 Route::post('/incidents/{id}', [IncidentController::class, 'update'])->name('incidents.update')->middleware('auth.admin');
 Route::delete('/incidents/{id}', [IncidentController::class, 'delete'])->name('incidents.delete')->middleware('auth.admin');
+Route::get('/incident/filtered', [IncidentController::class, 'filteredIncidents'])->name('incidents.list.filtered')->middleware('auth.admin');
 
 // ----------------------------------------------------------------------------------------------
 Route::get('/test', function () {

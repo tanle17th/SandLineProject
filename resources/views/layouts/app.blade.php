@@ -41,7 +41,7 @@
                     <!-- Left Side Of Navbar -->
                     <!-- This displays quick links to lists of logs/timecards/reports -->
                     <!-- Only be displayed in Worker side -->
-                    @if (\Request::is('login') or \Request::is('password/reset') or Auth::user()->role == 'admin')
+                    {{-- @if (\Request::is('login') or \Request::is('password/reset') or Auth::user()->role == 'admin')
                     <ul class="navbar-nav"></ul>
                     @else
                     <ul class="navbar-nav">
@@ -55,7 +55,7 @@
                             <a class="nav-link" href="#">Incident Reports</a>
                         </li>
                     </ul>
-                    @endif
+                    @endif --}}
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
