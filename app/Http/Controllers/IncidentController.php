@@ -142,20 +142,22 @@ class IncidentController extends Controller
         return redirect(route('incidents.list'))->with('mssg', 'Incident updated');
     }
 
+    /**
+     * method that removes incident from the database and also remove image from images folder
+     */
     public function delete($id)
     {
         // use id to query data
         $incident = Incident::findOrFail($id);
-
-        // remove image from public folder
-        if (!isEmpty($incident->image))
-            //delete image from images folder under public folder
-            unlink(public_path('images') . '/' . $incident->image);
+        
+        // remove image from images folder under public folder
+        if (!is_null($incident->image))
+        unlink(public_path('images').'/'.$incident->image);
 
         //remove incident from the database
         $incident->delete();
 
-        return redirect(route('incidents.list'))->with('mssg', 'Incident deleted');
+       return redirect(route('incidents.list'))->with('mssg', 'Incident deleted');
     }
 
 
