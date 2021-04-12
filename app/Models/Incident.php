@@ -9,24 +9,26 @@ class Incident extends Model
 {
     use HasFactory;
 
-    // protected $table = "incidents";
-
     /**
-     * Get the worker that belongs to this incident.
+     * Incident has a many to one relation with user
+     * Therefore get the user id referencing worker associated with an incident
+     * and store same in user_id column of incident table
      */
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
-    // This is just another method to call by a worker rather than user
+    // This is just another method to call by a worker rather than user for clarity reason
     public function worker()
     {
         return $this->user();
     }
 
     /**
-     * Get the location of this worklog.
+     * Incident has a many to one relation with location
+     * Therefore get the location id referencing location of an incident
+     * and store same in location_id column of incident table
      */
     public function location()
     {

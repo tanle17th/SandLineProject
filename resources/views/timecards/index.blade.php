@@ -476,10 +476,12 @@
                 </tbody>
 
             </table>
+
         </div>
 
     @endif
 </div>
+
 
 
 @endsection

@@ -14,42 +14,58 @@ use function PHPUnit\Framework\isEmpty;
 
 class IncidentController extends Controller
 {
+    /**
+     * method that returns index view with all the incidents from the database as a list
+     */
     public function index()
     {
-        // $locations = Incident::paginate(15);
-        // $incidents = Incident::all();
-        //  $incidents = Incident::orderBy('time')->get();
-        //   $incidents = Incident::orderBy('time', 'desc')->get();
-        //   $incidents = Incident::where('detail', 'testing2 detail')->get();
-        //  $incidents = Incident::latest()->get();
-        $incidents = Incident::where('is_active', true)->paginate(5);
 
+        // Retrieving data from database
+        $incidents = Incident::where('is_active', true)->latest()->get();
+        //$incidents = Incident::orderBy('is_active')->paginate(5);
 
-        //  return view('incidents.index');
+        // $incidents = Incident::latest()->paginate(5);
+
         return view('incidents.index', ['incidents' => $incidents,]);
     }
 
 
+    /**
+     * method that returns the create view with create form for new incident creation
+     * it is invoked by route->name('incidents.create');
+     */
     public function create()
     {
+        //retrieving all locations from the database
         $locations = Location::where('is_active', true)->get();
 
         return view('incidents.create', ['locations' => $locations,]);
     }
 
+
+    /**
+     * method that retrieves user's input from create form,
+     * instantiate a new incident, set the new incident with the input values
+     * and stores the new incident in the database
+     */
     public function store(Request $request)
     {
 
+        //create name for uploaded image
         $image = $request->file('file');
         if (is_null($image)) {
             $imageName = request('file');
         } else {
+            //create name by concatenating timestamp and image extension
             $imageName = time() . '.' . $image->extension();
+            //save image to images folder under public folder
             $image->move(public_path('images'), $imageName);
         }
 
+        //instantiate new incident
         $incident = new Incident();
 
+        //set new incident with values retrieved from create form
         $incident->user_id = Auth::user()->id;
         $incident->location_id = request('location');
         $incident->date = request('date');
@@ -58,7 +74,7 @@ class IncidentController extends Controller
         $incident->image = $imageName;
         $incident->comment = request('comment');
 
-        // error_log($incident->save());
+        //store new incident in the database
         $incident->save();
 
         if (Auth::user()->role == 'admin') {
@@ -68,35 +84,50 @@ class IncidentController extends Controller
         }
     }
 
+    /**
+     * method that returns the edit view with edit form
+     */
     public function edit($id)
     {
-        // use $id to query the db
+        // use id to query data
         $incident = Incident::findOrFail($id);
 
+        //retrieving all locations from the database
         $locations = Location::all();
 
         return view('incidents.edit', ['incident' => $incident, 'locations' => $locations]);
     }
 
 
+    /**
+     * method that retrieves user's input from edit form,
+     * set the current incident with the input values
+     * and stores the updated incident in the database
+     */
     public function update(Request $request)
     {
+        //get current incident
         $incident = Incident::findOrFail(request('id'));
 
+        //create name for uploaded image
         $image = $request->file('file');
         if (is_null($image)) {
-            //  $imageName = request('file');
             $imageName = $incident->image;
         } else if (is_null($incident->image)) {
+            //create name by concatenating timestamp and image extension
             $imageName = time() . '.' . $image->extension();
+            //save image to images folder under public folder
             $image->move(public_path('images'), $imageName);
         } else {
+            //delete image from images folder under public folder
             unlink(public_path('images') . '/' . $incident->image);
+            //create name by concatenating timestamp and image extension
             $imageName = time() . '.' . $image->extension();
+            //save image to images folder under public folder
             $image->move(public_path('images'), $imageName);
         }
 
-
+        //set current incident with values from edit form
         $incident->date = request('date');
         $incident->time = request('time');
         $incident->location_id = request('location');
@@ -106,28 +137,34 @@ class IncidentController extends Controller
         $incident->is_active = request('is_active');
 
 
+        //store updated incident in th database
         $incident->save();
 
         return redirect(route('incidents.list'))->with('mssg', 'Incident updated');
     }
 
+    /**
+     * method that removes incident from the database and also remove image from images folder
+     */
     public function delete($id)
     {
-
+        // use id to query data
         $incident = Incident::findOrFail($id);
 
-        // remove image from public folder
-        if (!isEmpty($incident->image))
+        // remove image from images folder under public folder
+        if (!is_null($incident->image))
             unlink(public_path('images') . '/' . $incident->image);
 
-        error_log("DELETING");
-        error_log($incident->image);
-
+        //remove incident from the database
         $incident->delete();
 
         return redirect(route('incidents.list'))->with('mssg', 'Incident deleted');
     }
 
+
+    /**
+     * method that returns index view with all the incidents base on type from the database as a list
+     */
     public function filteredIncidents()
     {
 
@@ -135,17 +172,18 @@ class IncidentController extends Controller
 
         switch ($type) {
             case "all":
-                $incidents = Incident::orderBy('is_active', 'desc')->paginate(5);
+                $incidents = Incident::orderBy('is_active', 'desc')->latest()->get();
                 break;
             case "unresolved":
-                $incidents = Incident::where('is_active', true)->paginate(5);
+                $incidents = Incident::where('is_active', true)->latest()->get(); //->paginate(5);
                 break;
             case "resolved":
-                $incidents = Incident::where('is_active', false)->paginate(5);
-                $color = "R";
+                $incidents = Incident::where('is_active', false)->latest()->get(); //->paginate(5);
                 break;
             default:
-                $incidents = Incident::orderBy('is_active', 'desc')->paginate(5);
+                $incidents = Incident::where('is_active', true)->latest()->get(); //->paginate(5);
+                //$incidents = Incident::orderBy('is_active')->paginate(5);
+                break;
         }
 
         return view('incidents.index', ['incidents' => $incidents]);

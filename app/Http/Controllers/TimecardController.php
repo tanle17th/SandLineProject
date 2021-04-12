@@ -75,7 +75,7 @@ class TimecardController extends Controller
                     ->whereNotNull('end_time')
                     ->where('date', '>=', $fromDate)
                     ->where('date', '<=', $toDate)
-                    ->latest()->paginate(50);
+                    ->latest()->get(); //->paginate(10);
                 //$exportTimecards = $allTimecards;
             }
             // SECOND:
@@ -83,7 +83,7 @@ class TimecardController extends Controller
             elseif (!empty($select_worker) and (empty($fromDate) or empty($toDate))) {
                 $allTimecards = Timecard::where('user_id', User::where('name', $select_worker)->first()->id)
                     ->whereNotNull('end_time')
-                    ->latest()->paginate(50);
+                    ->latest()->get(); //->paginate(10);
                 //$exportTimecards = $allTimecards;
             }
             // THIRD:
@@ -92,13 +92,13 @@ class TimecardController extends Controller
                 $allTimecards = Timecard::whereNotNull('end_time')
                     ->where('date', '>=', $fromDate)
                     ->where('date', '<=', $toDate)->orderBy('user_id')
-                    ->latest()->paginate(50);
+                    ->latest()->get(); //->paginate(10);
                 //$exportTimecards = $allTimecards;
             }
             // FOURTH:
             // if none of the condition above is true -> Get ALL timecards of and display
             else {
-                $allTimecards = Timecard::whereNotNull('end_time')->latest()->paginate(50);
+                $allTimecards = Timecard::whereNotNull('end_time')->latest()->get(); //->paginate(10);
                 //$exportTimecards = $allTimecards;
             }
             // Get all on-going timecards:
@@ -117,7 +117,7 @@ class TimecardController extends Controller
                     ->whereNotNull('end_time')
                     ->where('date', '>=', $fromDate)
                     ->where('date', '<=', $toDate)
-                    ->latest()->paginate(50);
+                    ->latest()->get(); //->paginate(10);
             }
 
             // SECOND:
@@ -125,7 +125,7 @@ class TimecardController extends Controller
             else {
                 $allTimecards = Timecard::where('user_id', Auth::user()->id)
                     ->whereNotNull('end_time')
-                    ->latest()->paginate(50);
+                    ->latest()->get(); //->paginate(10);
             }
             // Get all on-going timecards:
             $onGoingTimecards = Timecard::where('user_id', Auth::user()->id)

@@ -51,7 +51,7 @@
 
         <div class="col-sm-6">
           <div class="float-right">
-            <a href="{{ route('incidents.create') }}" class="btn btn-purple justify-content-end">Add New</a>
+            <a href="{{ route('incidents.create') }}" class="btn btn-blue-grey justify-content-end">Add New</a>
           </div>
 
         </div>
@@ -59,7 +59,7 @@
     </div>
 
       <table class="table table-hover mt-4 border table-bordered">
-      <thead class="indigo white-text">
+        <thead class="thead-dark">
         <tr>
           <th><b>Date</b></th>
           <th><b>Time</b></th>
@@ -98,10 +98,11 @@
               @csrf
               @method('DELETE')
               <div class="btn-group" role="group">
+                <a href="{{ route('incidents.edit', $incident->id) }}">
                 <button type="button" class="btn btn-outline-default waves-effect px-3">
-                  <a href="{{ route('incidents.edit', $incident->id) }}">
-                    <i class="fas fa-edit"></i></a>
+                    <i class="fas fa-edit"></i>
                 </button>
+                </a>
                 <button type="submit" class="btn btn-outline-danger waves-effect px-3"
                   onclick="return confirm('Incident Date: {{ $incident->date}}\nIncident Time: {{ $incident->time}}\nReported By: {{ $incident->worker->name}}\n\nAre you sure you want to delete this incident?\n\nPress OK to Proceed with delete');">
                   <i class="fas fa-trash"></i>
@@ -122,7 +123,7 @@
 
     </table>
 
-    {{ $incidents->links() }}
+    {{-- {{ $incidents->links() }} --}}
 
   </div>
 @endsection
